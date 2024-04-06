@@ -117,10 +117,7 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     appbar_text_ref = ft.Ref[ft.Text]()
     page.title = "GoFiles"
-    background = ft.Image(
-        src=f"/images/fondo.png",
-        fit=ft.ImageFit.CONTAIN,
-    )
+    
 
     page.appbar = ft.AppBar(
         title=ft.Text("GoFiles", ref=appbar_text_ref),
