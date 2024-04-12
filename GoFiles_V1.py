@@ -30,8 +30,6 @@ def main(page: ft.Page):
                 page.update()
                 return False
 
-    def upload_file(e):
-        pass
 
     def close_banner(e):
         banner.open = False
@@ -170,7 +168,7 @@ def main(page: ft.Page):
         expand=True
     )
 
-    upload_button = ft.ElevatedButton(text="Subir", on_click=upload_file)
+    upload_button = ft.ElevatedButton(text="Subir", on_click=open_file)
 
     main_menu = ft.Row([menubar])
 
