@@ -44,7 +44,6 @@ def main(page: ft.Page):
             main_menu,
             column_1
         )
-        page.add(login_panel)
     
     def error_file():
         error_no_file_selected.open = True
@@ -74,8 +73,6 @@ def main(page: ft.Page):
             value= "Debe seleccionar al menos un archivo"
                         )
     )
-
-
     # ---------------------------------------- #
 
 
@@ -192,11 +189,6 @@ def main(page: ft.Page):
         login_panel,
         error_no_account
         )
-
-
-
-
-
+    
 ft.app(target= main,
-        assets_dir= 'assets',
         name= "GoFiles")
