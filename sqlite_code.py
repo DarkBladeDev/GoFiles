@@ -11,7 +11,7 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS usuarios (
 )""")
 
 cursor.execute(""" CREATE TABLE IF NOT EXISTS archivos (
-            ID INT PRIMARY KEY,
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
             filename TEXT,
             filedate TEXT
 )""")
@@ -37,6 +37,12 @@ class User:
             return False
 
 
+def delete_table(table):
+    con = sqlite3.connect('GoFiles.db')
+    cursor = con.cursor()
+    cursor.execute(f"DROP TABLE {table}")
+    con.commit()
+    con.close()
 
 def registrar(username, password):
     con = sqlite3.connect('GoFiles.db')
@@ -78,6 +84,9 @@ if __name__ == "__main__":
             arg_1 = input("Username >> ")
             arg_2 = input("Password >> ")
             deleteRow(arg_1, arg_2)
+
+        if comando == "Drop" or comando == "drop":
+            delete_table(input("Table >> "))
 
         if comando == "Show" or comando == "show":
             select()
