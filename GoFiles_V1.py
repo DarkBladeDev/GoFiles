@@ -1,7 +1,7 @@
 import flet as ft #pip install flet
 import sqlite3 as sql
 import time
-
+import datetime #pip install DateTime
 
 def main(page: ft.Page):
 
@@ -43,8 +43,14 @@ def main(page: ft.Page):
     def logout():
         page.remove(
             main_menu,
-            column_1
+            column_1,
+            data_table
         )
+        page.add(
+                login_panel,
+                error_no_account
+                )
+        
     
     def error_file():
         error_no_file_selected.open = True
@@ -53,18 +59,14 @@ def main(page: ft.Page):
 
     def open_file(e: ft.FilePickerResultEvent):
         file_name = e.files[0].name
-        file_date = time.ctime(e.files[0].last_modified)
-        selected_files.value = (
-            ", ".join(map(lambda f: f.name, e.files)) if e.files else error_file()
-        )
-        selected_files.update()
+        file_date = datetime.datetime.now().date()
+        file_bytes = bytes(e.files[0])
         conn = sql.connect('GoFiles.db')
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO ARCHIVOS (filename, filedate) VALUES (?, ?)", (file_name, file_date))
+        cursor.execute("INSERT INTO ARCHIVOS (filename, filedate, file) VALUES (?, ?, ?)", (file_name, file_date, sql.Binary(file_bytes)))
         conn.commit()
         conn.close()
 
-    selected_files = ft.Text()
     pick_files_dialog = ft.FilePicker(on_result=open_file)
     page.overlay.append(pick_files_dialog)
 
@@ -213,6 +215,8 @@ def main(page: ft.Page):
 
     # Establecer la lista de filas en la tabla de datos
     data_table = ft.DataTable(
+        show_checkbox_column= True,
+        bgcolor=ft.colors.GREY_100,
         columns=[
             ft.DataColumn(ft.Text("ID")),
             ft.DataColumn(ft.Text("Nombre del archivo")),
