@@ -1,4 +1,4 @@
-import flet as ft
+import flet as ft #pip install flet
 import sqlite3 as sql
 import time
 
