@@ -184,21 +184,37 @@ def main(page: ft.Page):
     file_id = 0
     file_name = "" #Debe contener el nombre del archivo coorespondiente a la base de datos ARCHIVOS
     file_date = "" #Debe contener la fecha de modificación del archivo
+
+    # Realizar la consulta SQL para obtener los archivos de la base de datos
+    conn = sql.connect('GoFiles.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM ARCHIVOS")
+    archivos = cursor.fetchall()
+    conn.close()
+
+    # Crear una lista vacía para almacenar las filas de la tabla de datos
+    rows = []
+
+    # Iterar a través de los archivos y agregar una nueva fila a la lista para cada archivo
+    for archivo in archivos:
+        file_id, file_name, file_date = archivo
+        row = ft.DataRow(
+            cells=[
+                ft.DataCell(ft.Text(file_id)),
+                ft.DataCell(ft.Text(file_name)),
+                ft.DataCell(ft.Text(file_date))
+            ]
+        )
+        rows.append(row)
+
+    # Establecer la lista de filas en la tabla de datos
     data_table = ft.DataTable(
         columns=[
             ft.DataColumn(ft.Text("ID")),
             ft.DataColumn(ft.Text("Nombre del archivo")),
             ft.DataColumn(ft.Text("Fecha de modificación"))
         ],
-        rows=[
-            ft.DataRow(
-                cells=[
-                    ft.DataCell(ft.Text(file_id)),
-                    ft.DataCell(ft.Text(file_name)),
-                    ft.DataCell(ft.Text(file_date))
-                ]
-            )
-        ]
+        rows=rows
     )
 
     column_1.controls.append(file_listview)
