@@ -52,10 +52,17 @@ def main(page: ft.Page):
 
 
     def open_file(e: ft.FilePickerResultEvent):
+        file_name = e.files[0].name
+        file_date = time.ctime(e.files[0].last_modified)
         selected_files.value = (
             ", ".join(map(lambda f: f.name, e.files)) if e.files else error_file()
         )
         selected_files.update()
+        conn = sql.connect('GoFiles.db')
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO ARCHIVOS (filename, filedate) VALUES (?, ?)", (file_name, file_date))
+        conn.commit()
+        conn.close()
 
     selected_files = ft.Text()
     pick_files_dialog = ft.FilePicker(on_result=open_file)
@@ -181,9 +188,6 @@ def main(page: ft.Page):
         ]
     )
 
-    file_id = 0
-    file_name = "" #Debe contener el nombre del archivo coorespondiente a la base de datos ARCHIVOS
-    file_date = "" #Debe contener la fecha de modificación del archivo
 
     # Realizar la consulta SQL para obtener los archivos de la base de datos
     conn = sql.connect('GoFiles.db')
