@@ -10,6 +10,14 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS usuarios (
             password TEXT
 )""")
 
+cursor.execute(""" CREATE TABLE IF NOT EXISTS archivos (
+            ID INT PRIMARY KEY,
+            filename TEXT,
+            filedate TEXT
+)""")
+
+con.commit()
+con.close()
 
 class User:
     def verificar_credenciales(usuario, contraseña):
