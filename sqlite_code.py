@@ -13,7 +13,8 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS usuarios (
 cursor.execute(""" CREATE TABLE IF NOT EXISTS archivos (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             filename TEXT,
-            filedate TEXT
+            filedate TEXT,
+            file BLOB
 )""")
 
 con.commit()
