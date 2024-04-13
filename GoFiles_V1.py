@@ -22,7 +22,8 @@ def main(page: ft.Page):
                 page.remove(carga)
                 page.add(
                     main_menu,
-                    column_1
+                    column_1,
+                    data_table
                 )
                 return True
             elif resultados == []:
@@ -180,7 +181,25 @@ def main(page: ft.Page):
         ]
     )
 
-
+    file_id = 0
+    file_name = "" #Debe contener el nombre del archivo coorespondiente a la base de datos ARCHIVOS
+    file_date = "" #Debe contener la fecha de modificación del archivo
+    data_table = ft.DataTable(
+        columns=[
+            ft.DataColumn(ft.Text("ID")),
+            ft.DataColumn(ft.Text("Nombre del archivo")),
+            ft.DataColumn(ft.Text("Fecha de modificación"))
+        ],
+        rows=[
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(file_id)),
+                    ft.DataCell(ft.Text(file_name)),
+                    ft.DataCell(ft.Text(file_date))
+                ]
+            )
+        ]
+    )
 
     column_1.controls.append(file_listview)
     column_1.controls.append(upload_button)
