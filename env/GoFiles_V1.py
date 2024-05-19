@@ -59,8 +59,11 @@ def main(page: ft.Page):
 
     def open_file(e: ft.FilePickerResultEvent):
         file_name = e.files[0].name
-        file_date = datetime.datetime.now().date()
-        file_bytes = bytes(list(e.files[0]))
+        file_date = time.ctime(e.files[0].last_modified)
+        selected_files.value = (
+            ", ".join(map(lambda f: f.name, e.files)) if e.files else error_file()
+        )
+        selected_files.update()
         conn = sql.connect('GoFiles.db')
         cursor = conn.cursor()
         cursor.execute("INSERT INTO ARCHIVOS (filename, filedate, file) VALUES (?, ?, ?)", (file_name, file_date, sql.Binary(file_bytes)))
