@@ -1,7 +1,7 @@
-**/GoFiles.db
-**/env/Lib
-**/env/Scripts
-**/env/share
-**/env/Incluide
-**/env/pyvenv.cfg
-**/env/sqlite_code.py
+**/APP/__pycache__
+**/API/main_v2.py
+**/certs/*
+**/creds/*
+**/requirements.txt
+**/APP/__init__.py
+**/certs-old
